@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+# Local
+  app-vue-front:
+    container_name: app-vue-front
+    image: vuejs_docker:dev
+    build:
+      context: .
+    volumes:
+      - '.:/app'
+      # - '/app/node_modules'
+    ports:
+      - '8080:8080'
+
+# Prod
+  app-vue-setup:
+    container_name: app-vue-setup
+    image: vuejs_docker:setup
+    build:
+      context: .
+    volumes:
+      - '.:/app'
+      # - '/app/node_modules'
+    ports:
+      - '80:80'
+
