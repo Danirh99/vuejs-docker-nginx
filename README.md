@@ -28,9 +28,9 @@ We need to prepare a Dockerfile and Docker-compose to run a container with vuejs
             "type-check": "vue-tsc --noEmit",
             "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
         },
-        ```
 2. Edit vite.config.ts adding `server { host: true,  port: 8080 }` you should see your vite.config.ts as the vite below this:
      ```sh
+       // https://vitejs.dev/config/
             export default defineConfig({
             server: {
                 host: true,
@@ -43,7 +43,6 @@ We need to prepare a Dockerfile and Docker-compose to run a container with vuejs
                 },
             },
             });
-        ```
 3. We need to create a Dockerfile in the root of the project
          ```sh
             FROM node:18.12.1-alpine
@@ -55,7 +54,7 @@ We need to prepare a Dockerfile and Docker-compose to run a container with vuejs
             EXPOSE 8080 8080
 
             CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
-        ```
+    
 
 
 ## Type Support for `.vue` Imports in TS
