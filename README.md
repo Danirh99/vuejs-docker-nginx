@@ -178,5 +178,6 @@ Once we have prepare local enviroment we need to create another Dockerfile with 
     ```
 4. Check if the containers are working
     Navigate to `localhost:8080` and you will see the vuejs project (hot reload).
+    
     Navigate to `localhost:80` and you will see the vuejs project in nginx server (no hot reload).
     IMPORTANT -> If you are using a virtual machine you must use the ip (of the VM) like `0.0.0.0:8080` change 0's for your ip numbers (same with `0.0.0.0:80`)
