@@ -62,8 +62,11 @@ We need to prepare a Dockerfile and Docker-compose to run a container with vuejs
     ```
 
 4. Create and edit docker-compose.yaml in the root of your project:
+
     container_name -> put the name that do you want
+
     image -> the name of the image that you have created at the point 3
+    
      ```sh
        version: '3.7'
         services:
@@ -142,8 +145,10 @@ Once we have prepare local enviroment we need to create another Dockerfile with 
     sudo docker build -f Setup.Dockerfile -t vuejs_docker:setup . --network="host"
     ```
 
-3. Edit docker-compsoe.yaml with the new image
+3. Edit docker-compsoe.yaml with the new image:
+
     container_name -> put the name that do you want
+
     image -> the name of the image that you have created at the point 2 - 3 and point 3 - 3
      ```sh
         version: '3.7'
@@ -176,8 +181,10 @@ Once we have prepare local enviroment we need to create another Dockerfile with 
     ```sh
     docker-compose up -d
     ```
-4. Check if the containers are working
+4. Check if the containers are working:
+
     Navigate to `localhost:8080` and you will see the vuejs project (hot reload).
-    
+
     Navigate to `localhost:80` and you will see the vuejs project in nginx server (no hot reload).
+
     IMPORTANT -> If you are using a virtual machine you must use the ip (of the VM) like `0.0.0.0:8080` change 0's for your ip numbers (same with `0.0.0.0:80`)
