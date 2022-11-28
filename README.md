@@ -30,7 +30,6 @@ We need to prepare a Dockerfile and Docker-compose to run a container with vuejs
         },
 2. Edit vite.config.ts adding `server { host: true,  port: 8080 }` you should see your vite.config.ts as the vite below this:
      ```sh
-       // https://vitejs.dev/config/
             export default defineConfig({
             server: {
                 host: true,
@@ -43,7 +42,7 @@ We need to prepare a Dockerfile and Docker-compose to run a container with vuejs
                 },
             },
             });
-3. We need to create a Dockerfile in the root of the project
+3. We need to create a Dockerfile in the root of the project:
      ```sh
             FROM node:18.12.1-alpine
 
@@ -55,50 +54,31 @@ We need to prepare a Dockerfile and Docker-compose to run a container with vuejs
 
             CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
     ```
-    Run the following command
+    Run the following command (you can change the name of the image (vuejs_docker:dev) for the name that you want)
     ```sh
     docker build -f Dev.Dockerfile -t vuejs_docker:dev . --network="host"
     ```
-4. Create and edit docker-compose.yaml in the root of your project
-
-    
-
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+4. Create and edit docker-compose.yaml in the root of your project:
+    container_name -> put the name that do you want
+    image -> the name of the image that you have created at the point 3
+     ```sh
+       version: '3.7'
+        services:
+        app-vue-front:
+            container_name: app-vue-front
+            image: vuejs_docker:dev
+            build:
+            context: .
+            volumes:
+            - '.:/app'
+            # - '/app/node_modules'
+            ports:
+            - '8080:8080'
+    ```
+    Run the following command to run the container
+    ```sh
+    docker-compose up -d
+    ```
+5. Check if the container it's working
+    Navigate to `localhost:8080` and you will see the vuejs project.
+    IMPORTANT -> If you are using a virtual machine you must use the ip (of the VM) like `111.111.111.111:8080`
