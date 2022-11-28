@@ -54,6 +54,7 @@ We need to prepare a Dockerfile and Docker-compose to run a container with vuejs
             EXPOSE 8080 8080
 
             CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+    ```
     Run the following command
     ```sh
     docker build -f Dev.Dockerfile -t vuejs_docker:dev . --network="host"
