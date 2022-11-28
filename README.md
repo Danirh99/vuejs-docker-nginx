@@ -1,10 +1,62 @@
-# vuejs-docker
+# Vuejs with Docker
 
-This template should help get you started developing with Vue 3 in Vite.
+This template should help get you started developing with Vue 3 in Vite and Docker.
 
-## Recommended IDE Setup
+## 1 - Create Vuejs Project
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+```sh
+npm init vue@latest
+```
+
+Once we have finished installing the project, we will do the following:
+1. `cd project-name` (in my case `cd vuejs-docker`)
+2. `npm install`
+3. `npm run dev`
+
+When we run npm run dev we will receive an ip to see the project, if you can see the project all it's okay.
+
+## 2 - Prepare Local Development
+We need to prepare a Dockerfile and Docker-compose to run a container with vuejs3 and vite
+
+1. Edit Package.json:
+    ```sh
+        "scripts": {
+            "dev": "vite",
+            "build": "run-p type-check build-only",
+            "preview": "vite preview",
+            "build-only": "vite build",
+            "type-check": "vue-tsc --noEmit",
+            "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+        },
+        ```
+2. Edit vite.config.ts adding `server { host: true,  port: 8080 }` you should see your vite.config.ts as the vite below this:
+     ```sh
+            export default defineConfig({
+            server: {
+                host: true,
+                port: 8080
+            },
+            plugins: [vue()],
+            resolve: {
+                alias: {
+                "@": fileURLToPath(new URL("./src", import.meta.url)),
+                },
+            },
+            });
+        ```
+3. We need to create a Dockerfile in the root of the project
+         ```sh
+            FROM node:18.12.1-alpine
+
+            WORKDIR /app
+            COPY . ./
+            RUN npm install
+
+            EXPOSE 8080 8080
+
+            CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+        ```
+
 
 ## Type Support for `.vue` Imports in TS
 
